@@ -907,3 +907,473 @@ button {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* nRp Kart redesign — visual adjustments */
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111111;
+  background: #ffffff;
+}
+
+body {
+  background: #ffffff;
+  color: #111111;
+}
+
+/* Header */
+.navbar {
+  min-height: 88px;
+  padding: 16px 4%;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+  box-shadow: 0 3px 15px rgb(0 0 0 / 5%);
+}
+
+.brand {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -3px;
+  color: #080808;
+}
+
+.brand > span {
+  margin: 0;
+  color: #080808;
+}
+
+.brand small {
+  display: none;
+}
+
+.nav-links {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav-links a:hover {
+  color: #20b8d2;
+}
+
+.search-box {
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+}
+
+.search-box input {
+  font-size: 13px;
+}
+
+.bag-link {
+  font-size: 13px;
+}
+
+/* Hero */
+.hero {
+  background: #ffffff;
+  padding-top: 55px;
+  padding-bottom: 65px;
+}
+
+.hero h1 {
+  color: #111111;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(38px, 4vw, 58px);
+  font-weight: 600;
+  letter-spacing: -2px;
+  line-height: 1.12;
+}
+
+.hero h1 em,
+.section-heading h2 em {
+  color: #20b8d2;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.eyebrow,
+.section-kicker {
+  color: #333333;
+  letter-spacing: 1px;
+}
+
+.eyebrow-dot {
+  background: #20b8d2;
+}
+
+.hero-copy > p {
+  color: #555555;
+  font-size: 15px;
+}
+
+.button-dark {
+  background: #26b8d2;
+  color: #071014;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 16px 26px;
+}
+
+.button-dark:hover {
+  background: #159bb4;
+  color: #ffffff;
+}
+
+.hero-visual {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.hero-image-shade {
+  background: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 30%),
+    transparent 45%
+  );
+}
+
+/* Sections and categories */
+.section {
+  background: #ffffff;
+}
+
+.categories-section {
+  background: #f7f9fa;
+}
+
+.section-heading h2 {
+  color: #111111;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.category-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.category-card {
+  min-height: 160px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
+  border-radius: 4px;
+}
+
+.category-01,
+.category-02,
+.category-03,
+.category-04,
+.category-05 {
+  background: #ffffff;
+}
+
+.category-icon {
+  color: #20b8d2;
+}
+
+.category-info strong {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.category-info small {
+  color: #666666;
+}
+
+/* Product filters */
+.product-toolbar {
+  border-bottom-color: #e5e5e5;
+}
+
+.chip {
+  border-radius: 3px;
+  background: #ffffff;
+  color: #333333;
+  font-size: 12px;
+}
+
+.chip-active {
+  background: #26b8d2;
+  color: #071014;
+  border-color: #26b8d2;
+}
+
+.sort-control,
+.sort-control select {
+  font-size: 12px;
+}
+
+/* Product cards */
+.product-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px 20px;
+}
+
+.product-card {
+  padding-bottom: 14px;
+  background: #ffffff;
+}
+
+.product-image {
+  aspect-ratio: 0.82;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.product-image img {
+  object-fit: contain;
+  padding: 8px;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.025);
+}
+
+.product-sand,
+.product-sage,
+.product-rose,
+.product-blue {
+  background: #f5f5f5;
+}
+
+.product-tag {
+  background: #ffffff;
+  color: #222222;
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+  font-size: 9px;
+}
+
+.product-arrow {
+  background: #26b8d2;
+  color: #111111;
+  border-radius: 3px;
+}
+
+.product-arrow:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+.product-details {
+  padding: 14px 2px 0;
+}
+
+.product-category {
+  color: #666666;
+  font-size: 11px;
+}
+
+.product-details h3 {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.product-price strong {
+  font-size: 16px;
+  color: #111111;
+}
+
+.product-price del {
+  color: #888888;
+  font-size: 12px;
+}
+
+/* Footer */
+.footer {
+  background: #111111;
+  color: #ffffff;
+}
+
+.footer-brand {
+  color: #ffffff;
+}
+
+.footer-brand > span {
+  color: #ffffff;
+}
+
+.footer-bottom {
+  border-top-color: #333333;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+  .category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .navbar {
+    background: #ffffff;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 10vw, 52px);
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 12px;
+  }
+}
+
+/* Bold youthful nRp Kart hero banner */
+
+.hero-banner {
+  position: relative;
+  min-height: 520px;
+  margin: 24px 4% 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: #162b35;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.hero-banner-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgb(8 22 30 / 88%) 0%,
+    rgb(8 22 30 / 65%) 45%,
+    rgb(8 22 30 / 10%) 100%
+  );
+}
+
+.hero-banner-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: 65px 7%;
+}
+
+.hero-banner-label {
+  display: inline-block;
+  margin-bottom: 22px;
+  color: #66e7f5;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.hero-banner h1 {
+  margin: 0;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 900;
+  letter-spacing: -4px;
+  line-height: 0.98;
+}
+
+.hero-banner h1 span {
+  color: #48d8eb;
+}
+
+.hero-banner-content p {
+  margin: 24px 0;
+  color: #f0f4f5;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.hero-banner-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  padding: 17px 23px;
+  background: #42d5e8;
+  color: #09212a;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.hero-banner-button:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+.hero-banner-note {
+  margin-top: 35px;
+  color: #d4e4e8;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.hero-banner-index {
+  position: absolute;
+  right: 25px;
+  bottom: 22px;
+  z-index: 1;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 700px) {
+  .hero-banner {
+    min-height: 490px;
+    margin: 14px 3% 0;
+  }
+
+  .hero-banner-overlay {
+    background: linear-gradient(
+      90deg,
+      rgb(8 22 30 / 82%),
+      rgb(8 22 30 / 40%)
+    );
+  }
+
+  .hero-banner-content {
+    padding: 45px 7%;
+  }
+
+  .hero-banner h1 {
+    font-size: clamp(43px, 11vw, 64px);
+    letter-spacing: -2px;
+  }
+
+  .hero-banner-content p {
+    font-size: 14px;
+  }
+
+  .hero-banner-index {
+    right: 14px;
+    bottom: 14px;
+    font-size: 8px;
+  }
+}
+
