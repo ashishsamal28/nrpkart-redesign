@@ -1,6 +1,7 @@
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
+import { getProducts, getCategories } from "./services/api";
 
 const categories = [
   { name: "Spiral Notebooks", number: "01", icon: "▤", description: "For everyday ideas" },
@@ -10,20 +11,7 @@ const categories = [
   { name: "Long Size", number: "05", icon: "▤", description: "For every subject" },
 ];
 
-const products = [
-  { id: 1, name: "nRp Note Studio A4 Spiral Notebook", category: "A4 Size Notebooks", price: 96, mrp: 120, tag: "POPULAR", image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=700&q=85", color: "sand", stock: 25, featured: true },
-  { id: 2, name: "nRp Mains Answer Writing Booklet 300 Pages", category: "King Size", price: 130, mrp: 150, tag: "EXAM ESSENTIAL", image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=700&q=85", color: "sage", stock: 20, featured: true },
-  { id: 3, name: "nRp Youth Spiral B5 Notebook 180 Pages", category: "Spiral Notebooks", price: 63, mrp: 75, tag: "STUDENT PICK", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=700&q=85", color: "rose", stock: 30, featured: true },
-  { id: 4, name: "nRp oNe A4 Spiral Notebook 180 Pages", category: "A4 Size Notebooks", price: 70, mrp: 85, tag: "EVERYDAY ESSENTIAL", image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=85", color: "blue", stock: 0, featured: false },
-  { id: 5, name: "nRp Classic A4 Ruled Notebook", category: "A4 Size Notebooks", price: 55, mrp: 65, tag: "CLASSIC", image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=700&q=85", color: "sand", stock: 18, featured: false },
-  { id: 6, name: "nRp Premium A4 Notebook", category: "A4 Size Notebooks", price: 110, mrp: 130, tag: "PREMIUM", image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=700&q=85", color: "sage", stock: 12, featured: false },
-  { id: 7, name: "nRp Everyday Spiral Notebook", category: "Spiral Notebooks", price: 45, mrp: 55, tag: "VALUE PICK", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=700&q=85", color: "rose", stock: 40, featured: false },
-  { id: 8, name: "nRp Student Spiral Notebook 200 Pages", category: "Spiral Notebooks", price: 80, mrp: 95, tag: "STUDENT PICK", image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=85", color: "blue", stock: 15, featured: false },
-  { id: 9, name: "nRp Premium Spiral Notebook", category: "Spiral Notebooks", price: 100, mrp: 120, tag: "PREMIUM", image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=700&q=85", color: "sand", stock: 0, featured: false },
-  { id: 10, name: "nRp King Size Writing Notebook", category: "King Size", price: 75, mrp: 90, tag: "POPULAR", image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=700&q=85", color: "sage", stock: 22, featured: false },
-  { id: 11, name: "nRp King Size Exam Notebook", category: "King Size", price: 90, mrp: 105, tag: "EXAM ESSENTIAL", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=700&q=85", color: "rose", stock: 10, featured: false },
-  { id: 12, name: "nRp King Size Ruled Notebook", category: "King Size", price: 60, mrp: 70, tag: "EVERYDAY ESSENTIAL", image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=85", color: "blue", stock: 8, featured: false },
-];
+
 
 function Navbar({ search, setSearch }) {
   return (
@@ -133,38 +121,67 @@ function CategorySection({ activeCategory, setActiveCategory }) {
   );
 }
 
+
 function ProductCard({ product }) {
   return (
     <article className="product-card">
-      <div className={`product-image product-${product.color}`}>
-        <img src={product.image} alt={product.name} loading="lazy" />
+      <div className="product-image">
+        <img
+          src={product.image || "https://placehold.co/600x600?text=nRp+Notebook"}
+          alt={product.name}
+          loading="lazy"
+        />
+
         <span className="product-tag">
-          {product.stock === 0 ? "OUT OF STOCK" : product.tag}
+          {product.stock === 0
+            ? "OUT OF STOCK"
+            : product.is_featured
+              ? "FEATURED"
+              : "NOTEBOOK"}
         </span>
+
         <button
           className="product-arrow"
           aria-label={`View ${product.name}`}
-          onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+          onClick={() =>
+            document
+              .getElementById("contact")
+              ?.scrollIntoView({ behavior: "smooth" })
+          }
         >
           ↗
         </button>
       </div>
+
       <div className="product-details">
         <span className="product-category">{product.category}</span>
         <h3>{product.name}</h3>
+
         <div className="product-price">
           <strong>₹{product.price}</strong>
           <del>₹{product.mrp}</del>
         </div>
+
         {product.stock === 0 && (
-          <small className="stock-status">Currently unavailable</small>
+          <small className="stock-status">
+            Currently unavailable
+          </small>
         )}
       </div>
     </article>
   );
 }
 
-function ProductSection({ search, activeCategory, setActiveCategory }) {
+
+function ProductSection({
+  products,
+  categories,
+  search,
+  activeCategory,
+  setActiveCategory,
+  loading,
+  apiError,
+})  {
   const [sort, setSort] = useState("featured");
   const [priceFilter, setPriceFilter] = useState("all");
   const [availabilityFilter, setAvailabilityFilter] = useState("all");
@@ -198,7 +215,7 @@ function ProductSection({ search, activeCategory, setActiveCategory }) {
     } else if (sort === "name") {
       result.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sort === "featured") {
-      result.sort((a, b) => Number(b.featured) - Number(a.featured));
+      result.sort((a, b) => Number(b.is_featured) - Number(a.is_featured));
     }
 
     return result;
@@ -269,7 +286,13 @@ function ProductSection({ search, activeCategory, setActiveCategory }) {
           </button>
         </div>
       </div>
+          {loading && <p>Loading products...</p>}
 
+{apiError && (
+  <p role="alert" className="stock-status">
+    {apiError}
+  </p>
+)}
       <p className="results-count">
         Showing {filteredProducts.length} of {products.length} products
       </p>
@@ -321,6 +344,37 @@ function App() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
+  const [products, setProducts] = useState([]);
+const [categories, setCategories] = useState([]);
+const [loading, setLoading] = useState(true);
+const [apiError, setApiError] = useState("");
+
+
+useEffect(() => {
+  async function loadData() {
+    try {
+      setLoading(true);
+      setApiError("");
+
+      const [productData, categoryData] = await Promise.all([
+        getProducts(),
+        getCategories(),
+      ]);
+
+      setProducts(productData);
+      setCategories(categoryData);
+    } catch (error) {
+      console.error("Failed to load nRp Kart data:", error);
+      setApiError("Unable to load products. Please check the backend.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  loadData();
+}, []);
+
+
   return (
     <>
       <Navbar search={search} setSearch={setSearch} />
@@ -330,11 +384,17 @@ function App() {
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
         />
-        <ProductSection
-          search={search}
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-        />
+        
+<ProductSection
+  products={products}
+  categories={categories}
+  search={search}
+  activeCategory={activeCategory}
+  setActiveCategory={setActiveCategory}
+  loading={loading}
+  apiError={apiError}
+/>
+
       </main>
       <Footer />
     </>
