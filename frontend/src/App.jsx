@@ -2,16 +2,15 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { getProducts, getCategories } from "./services/api";
+import Admin from "./admin/Admin";
 
-const categories = [
+const categoryDetails = [
   { name: "Spiral Notebooks", number: "01", icon: "▤", description: "For everyday ideas" },
   { name: "A4 Size Notebooks", number: "02", icon: "▧", description: "Room to think bigger" },
   { name: "King Size", number: "03", icon: "▤", description: "Made for long notes" },
   { name: "Case Bound", number: "04", icon: "▥", description: "A sturdy companion" },
   { name: "Long Size", number: "05", icon: "▤", description: "For every subject" },
 ];
-
-
 
 function Navbar({ search, setSearch }) {
   return (
@@ -24,6 +23,7 @@ function Navbar({ search, setSearch }) {
         <a href="#categories">Shop</a>
         <a href="#products">Products</a>
         <a href="#contact">Contact</a>
+        <a href="/admin">Admin</a>
       </nav>
       <div className="nav-actions">
         <label className="search-box">
@@ -35,7 +35,9 @@ function Navbar({ search, setSearch }) {
             onChange={(event) => setSearch(event.target.value)}
           />
         </label>
-        <a className="bag-link" href="#products">Shop <span>↗</span></a>
+        <a className="bag-link" href="#products">
+          Shop <span>↗</span>
+        </a>
       </div>
     </header>
   );
@@ -49,14 +51,19 @@ function Hero() {
           <span className="eyebrow-dot" />
           QUALITY. AFFORDABILITY. SUSTAINABILITY.
         </div>
-        <h1>Every Page We Make<br />Begins With a <em>Promise.</em></h1>
+        <h1>
+          Every Page We Make
+          <br />
+          Begins With a <em>Promise.</em>
+        </h1>
         <p>
-          Designed for those who write their own story.
-          Discover notebooks made for learning, creating,
-          and bringing your ideas to life.
+          Designed for those who write their own story. Discover notebooks
+          made for learning, creating, and bringing your ideas to life.
         </p>
         <div className="hero-actions">
-          <a className="button button-dark" href="#products">Shop Now <span>↗</span></a>
+          <a className="button button-dark" href="#products">
+            Shop Now <span>↗</span>
+          </a>
           <span className="hero-note">Made for your everyday.</span>
         </div>
         <div className="hero-stats">
@@ -78,7 +85,10 @@ function Hero() {
         </div>
         <div className="floating-note">
           <span className="note-star">✳</span>
-          <span><strong>Start somewhere.</strong><small>Your next idea awaits.</small></span>
+          <span>
+            <strong>Start somewhere.</strong>
+            <small>Your next idea awaits.</small>
+          </span>
         </div>
         <div className="image-index">01 / 03</div>
       </div>
@@ -97,15 +107,17 @@ function CategorySection({ activeCategory, setActiveCategory }) {
         <p>Little things that make a big difference.</p>
       </div>
       <div className="category-grid">
-        {categories.map((category) => (
+        {categoryDetails.map((category) => (
           <button
             key={category.name}
             className={`category-card category-${category.number} ${
               activeCategory === category.name ? "category-active" : ""
             }`}
-            onClick={() => setActiveCategory(
-              activeCategory === category.name ? "All" : category.name
-            )}
+            onClick={() =>
+              setActiveCategory(
+                activeCategory === category.name ? "All" : category.name
+              )
+            }
           >
             <span className="category-number">{category.number}</span>
             <span className="category-icon">{category.icon}</span>
@@ -121,7 +133,6 @@ function CategorySection({ activeCategory, setActiveCategory }) {
   );
 }
 
-
 function ProductCard({ product }) {
   return (
     <article className="product-card">
@@ -131,7 +142,6 @@ function ProductCard({ product }) {
           alt={product.name}
           loading="lazy"
         />
-
         <span className="product-tag">
           {product.stock === 0
             ? "OUT OF STOCK"
@@ -139,39 +149,32 @@ function ProductCard({ product }) {
               ? "FEATURED"
               : "NOTEBOOK"}
         </span>
-
         <button
           className="product-arrow"
           aria-label={`View ${product.name}`}
           onClick={() =>
-            document
-              .getElementById("contact")
-              ?.scrollIntoView({ behavior: "smooth" })
+            document.getElementById("contact")?.scrollIntoView({
+              behavior: "smooth",
+            })
           }
         >
           ↗
         </button>
       </div>
-
       <div className="product-details">
         <span className="product-category">{product.category}</span>
         <h3>{product.name}</h3>
-
         <div className="product-price">
           <strong>₹{product.price}</strong>
-          <del>₹{product.mrp}</del>
+          {product.mrp != null && <del>₹{product.mrp}</del>}
         </div>
-
         {product.stock === 0 && (
-          <small className="stock-status">
-            Currently unavailable
-          </small>
+          <small className="stock-status">Currently unavailable</small>
         )}
       </div>
     </article>
   );
 }
-
 
 function ProductSection({
   products,
@@ -181,7 +184,7 @@ function ProductSection({
   setActiveCategory,
   loading,
   apiError,
-})  {
+}) {
   const [sort, setSort] = useState("featured");
   const [priceFilter, setPriceFilter] = useState("all");
   const [availabilityFilter, setAvailabilityFilter] = useState("all");
@@ -197,7 +200,9 @@ function ProductSection({
       const matchesPrice =
         priceFilter === "all" ||
         (priceFilter === "under60" && product.price < 60) ||
-        (priceFilter === "60to100" && product.price >= 60 && product.price <= 100) ||
+        (priceFilter === "60to100" &&
+          product.price >= 60 &&
+          product.price <= 100) ||
         (priceFilter === "above100" && product.price > 100);
 
       const matchesAvailability =
@@ -205,7 +210,12 @@ function ProductSection({
         (availabilityFilter === "in-stock" && product.stock > 0) ||
         (availabilityFilter === "out-of-stock" && product.stock === 0);
 
-      return matchesSearch && matchesCategory && matchesPrice && matchesAvailability;
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesPrice &&
+        matchesAvailability
+      );
     });
 
     if (sort === "price-low") {
@@ -215,11 +225,13 @@ function ProductSection({
     } else if (sort === "name") {
       result.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sort === "featured") {
-      result.sort((a, b) => Number(b.is_featured) - Number(a.is_featured));
+      result.sort(
+        (a, b) => Number(b.is_featured) - Number(a.is_featured)
+      );
     }
 
     return result;
-  }, [search, activeCategory, sort, priceFilter, availabilityFilter]);
+  }, [products, search, activeCategory, sort, priceFilter, availabilityFilter]);
 
   function resetFilters() {
     setActiveCategory("All");
@@ -235,26 +247,47 @@ function ProductSection({
           <span className="section-kicker">THE GOOD STUFF</span>
           <h2>Desk favourites<span className="heading-period">.</span></h2>
         </div>
-        <a className="text-link" href="#categories">Find your essentials <span>↗</span></a>
+        <a className="text-link" href="#categories">
+          Find your essentials <span>↗</span>
+        </a>
       </div>
 
-      <div className="product-toolbar" style={{ display: "flex", flexDirection: "column", alignItems: "stretch", gap: "18px" }}>
+      <div
+        className="product-toolbar"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "stretch",
+          gap: "18px",
+        }}
+      >
         <div className="filter-chips" aria-label="Filter by category">
-          {["All", ...categories.map((category) => category.name)].map((category) => (
-            <button
-              key={category}
-              className={activeCategory === category ? "chip chip-active" : "chip"}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
+          {["All", ...categories.map((category) => category.name)].map(
+            (category) => (
+              <button
+                key={category}
+                className={
+                  activeCategory === category ? "chip chip-active" : "chip"
+                }
+                onClick={() => setActiveCategory(category)}
+              >
+                {category}
+              </button>
+            )
+          )}
         </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 18px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: "12px 18px",
+          }}
+        >
           <label className="sort-control">
             Sort by
-            <select value={sort} onChange={(event) => setSort(event.target.value)}>
+            <select value={sort} onChange={(e) => setSort(e.target.value)}>
               <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
@@ -264,7 +297,10 @@ function ProductSection({
 
           <label className="sort-control">
             Price
-            <select value={priceFilter} onChange={(event) => setPriceFilter(event.target.value)}>
+            <select
+              value={priceFilter}
+              onChange={(e) => setPriceFilter(e.target.value)}
+            >
               <option value="all">All prices</option>
               <option value="under60">Under ₹60</option>
               <option value="60to100">₹60–₹100</option>
@@ -274,7 +310,10 @@ function ProductSection({
 
           <label className="sort-control">
             Availability
-            <select value={availabilityFilter} onChange={(event) => setAvailabilityFilter(event.target.value)}>
+            <select
+              value={availabilityFilter}
+              onChange={(e) => setAvailabilityFilter(e.target.value)}
+            >
               <option value="all">All products</option>
               <option value="in-stock">In stock</option>
               <option value="out-of-stock">Out of stock</option>
@@ -286,13 +325,13 @@ function ProductSection({
           </button>
         </div>
       </div>
-          {loading && <p>Loading products...</p>}
 
-{apiError && (
-  <p role="alert" className="stock-status">
-    {apiError}
-  </p>
-)}
+      {loading && <p>Loading products...</p>}
+
+      {apiError && (
+        <p role="alert" className="stock-status">{apiError}</p>
+      )}
+
       <p className="results-count">
         Showing {filteredProducts.length} of {products.length} products
       </p>
@@ -304,17 +343,21 @@ function ProductSection({
           ))}
         </div>
       ) : (
-        <div className="empty-state">
-          <span>⌕</span>
-          <h3>No products found</h3>
-          <p>Try changing your search or filters.</p>
-          <button className="button button-dark" onClick={resetFilters}>
-            Clear filters
-          </button>
-        </div>
+        !loading && (
+          <div className="empty-state">
+            <span>⌕</span>
+            <h3>No products found</h3>
+            <p>Try changing your search or filters.</p>
+            <button className="button button-dark" onClick={resetFilters}>
+              Clear filters
+            </button>
+          </div>
+        )
       )}
 
-      <p className="demo-note">Preview collection · Sample products for the prototype</p>
+      <p className="demo-note">
+        Preview collection · Sample products for the prototype
+      </p>
     </section>
   );
 }
@@ -343,37 +386,46 @@ function Footer() {
 function App() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-
   const [products, setProducts] = useState([]);
-const [categories, setCategories] = useState([]);
-const [loading, setLoading] = useState(true);
-const [apiError, setApiError] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState("");
 
+  const isAdminPage =
+    window.location.pathname.replace(/\/+$/, "") === "/admin";
 
-useEffect(() => {
-  async function loadData() {
-    try {
-      setLoading(true);
-      setApiError("");
-
-      const [productData, categoryData] = await Promise.all([
-        getProducts(),
-        getCategories(),
-      ]);
-
-      setProducts(productData);
-      setCategories(categoryData);
-    } catch (error) {
-      console.error("Failed to load nRp Kart data:", error);
-      setApiError("Unable to load products. Please check the backend.");
-    } finally {
+  useEffect(() => {
+    if (isAdminPage) {
       setLoading(false);
+      return;
     }
+
+    async function loadData() {
+      try {
+        setLoading(true);
+        setApiError("");
+
+        const [productData, categoryData] = await Promise.all([
+          getProducts(),
+          getCategories(),
+        ]);
+
+        setProducts(productData);
+        setCategories(categoryData);
+      } catch (error) {
+        console.error("Failed to load nRp Kart data:", error);
+        setApiError("Unable to load products. Please check the backend.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  }, [isAdminPage]);
+
+  if (isAdminPage) {
+    return <Admin />;
   }
-
-  loadData();
-}, []);
-
 
   return (
     <>
@@ -384,17 +436,15 @@ useEffect(() => {
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
         />
-        
-<ProductSection
-  products={products}
-  categories={categories}
-  search={search}
-  activeCategory={activeCategory}
-  setActiveCategory={setActiveCategory}
-  loading={loading}
-  apiError={apiError}
-/>
-
+        <ProductSection
+          products={products}
+          categories={categories}
+          search={search}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          loading={loading}
+          apiError={apiError}
+        />
       </main>
       <Footer />
     </>
