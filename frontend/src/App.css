@@ -264,20 +264,22 @@ button {
   color: #85877e;
 }
 
+
 .hero-visual {
   position: relative;
-  min-width: 0;
-  height: 425px;
-  overflow: visible;
-  background: #ded7c7;
+  width: 100%;
+  aspect-ratio: 1447 / 1087;
+  height: auto;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
-.hero-image {
+.hero-visual img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  display: block;
 }
 
 .hero-image-shade {
@@ -1376,4 +1378,166 @@ body {
     font-size: 8px;
   }
 }
+
+/* =========================================
+   nRp KART - CATEGORY IMAGE CARDS
+   ========================================= */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 32px;
+}
+
+.category-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 0 18px;
+  overflow: hidden;
+  text-align: left;
+  color: #111;
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  border-color: #20b8d2;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 8%);
+}
+
+.category-card.category-active {
+  border-color: #20b8d2;
+  box-shadow: 0 0 0 2px rgb(32 184 210 / 15%);
+}
+
+.category-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f3f3f3;
+}
+
+.category-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-image {
+  transform: scale(1.04);
+}
+
+.category-image-number {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 9px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 92%);
+  color: #111;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.category-info {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px 15px 0;
+}
+
+.category-info strong {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.category-info small {
+  color: #666;
+  font-size: 13px;
+}
+
+.category-arrow {
+  position: absolute;
+  right: 15px;
+  bottom: 19px;
+  font-size: 21px;
+}
+
+@media (max-width: 1100px) {
+  .category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .category-info {
+    padding: 12px 10px 0;
+  }
+
+  .category-info strong {
+    font-size: 15px;
+  }
+
+  .category-info small {
+    font-size: 12px;
+  }
+
+  .category-arrow {
+    right: 10px;
+    bottom: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.category-image {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.category-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.category-card .category-image {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  margin: 0 0 12px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
 

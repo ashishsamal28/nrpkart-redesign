@@ -5,13 +5,41 @@ import { getProducts, getCategories } from "./services/api";
 import Admin from "./admin/Admin";
 import Chatbot from "./Chatbot";
 
+
 const categoryDetails = [
-  { name: "Spiral Notebooks", number: "01", icon: "▤", description: "For everyday ideas" },
-  { name: "A4 Size Notebooks", number: "02", icon: "▧", description: "Room to think bigger" },
-  { name: "King Size", number: "03", icon: "▤", description: "Made for long notes" },
-  { name: "Case Bound", number: "04", icon: "▥", description: "A sturdy companion" },
-  { name: "Long Size", number: "05", icon: "▤", description: "For every subject" },
+  {
+    name: "Spiral Notebooks",
+    number: "01",
+    description: "For everyday ideas",
+    image: "https://nrpkart.com/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-13-at-5.15.44-PM.jpeg",
+  },
+  {
+    name: "A4 Size Notebooks",
+    number: "02",
+    description: "Room to think bigger",
+    image: "/images/a4image.webp",
+
+  },
+  {
+    name: "King Size",
+    number: "03",
+    description: "Made for long notes",
+    image: "/images/king.webp",
+  },
+  {
+    name: "Case Bound",
+    number: "04",
+    description: "A sturdy companion",
+    image: "/images/case.webp",
+  },
+  {
+    name: "Long Size",
+    number: "05",
+    description: "For every subject",
+    image: "/images/long.webp",
+  },
 ];
+
 
 function Navbar({ search, setSearch }) {
   return (
@@ -90,10 +118,14 @@ function Hero() {
 
       <div className="hero-visual">
         
+
+
 <img
-  src="/images/nrpkart_poster_1200x901.png"
+  src="/images/nrpkart_hero_1447x1087.png"
   alt="nRp Kart stationery collection"
 />
+
+
 
         <div className="hero-image-shade" />
 
@@ -117,36 +149,72 @@ function Hero() {
 }
 
 
+
+
 function CategorySection({ activeCategory, setActiveCategory }) {
   return (
     <section className="section categories-section" id="categories">
       <div className="section-heading">
         <div>
           <span className="section-kicker">A PLACE FOR EVERYTHING</span>
-          <h2>Find your <em>kind of paper.</em></h2>
+          <h2>
+            Find your <em>kind of paper.</em>
+          </h2>
         </div>
         <p>Little things that make a big difference.</p>
       </div>
+
       <div className="category-grid">
         {categoryDetails.map((category) => (
           <button
+            type="button"
+     
             key={category.name}
             className={`category-card category-${category.number} ${
               activeCategory === category.name ? "category-active" : ""
             }`}
-            onClick={() =>
+            onClick={() => {
               setActiveCategory(
                 activeCategory === category.name ? "All" : category.name
-              )
-            }
+              );
+              <img
+  src={category.image}
+  alt={category.name}
+  className="category-image"
+
+/>
+              document.getElementById("products")?.scrollIntoView({
+                behavior: "smooth",
+              });
+            }}
+            aria-pressed={activeCategory === category.name}
+  
           >
-            <span className="category-number">{category.number}</span>
-            <span className="category-icon">{category.icon}</span>
+  
+            <div className="category-image-wrap">
+              <img
+                className="category-image"
+                src={category.image}
+                alt={category.name}
+                loading="lazy"
+                onError={(event) => {
+                  event.currentTarget.style.visibility = "hidden";
+                }}
+              />
+              <span className="category-image-number">
+                {category.number}
+              </span>
+            </div>
+
             <span className="category-info">
               <strong>{category.name}</strong>
               <small>{category.description}</small>
             </span>
-            <span className="category-arrow">↗</span>
+
+            <span className="category-arrow" aria-hidden="true">
+              ↗
+            </span>
+            
           </button>
         ))}
       </div>
