@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { getProducts, getCategories } from "./services/api";
 import Admin from "./admin/Admin";
+import Chatbot from "./Chatbot";
 
 const categoryDetails = [
   { name: "Spiral Notebooks", number: "01", icon: "▤", description: "For everyday ideas" },
@@ -43,6 +44,7 @@ function Navbar({ search, setSearch }) {
   );
 }
 
+
 function Hero() {
   return (
     <section className="hero" id="home">
@@ -51,38 +53,55 @@ function Hero() {
           <span className="eyebrow-dot" />
           QUALITY. AFFORDABILITY. SUSTAINABILITY.
         </div>
+
         <h1>
           Every Page We Make
           <br />
           Begins With a <em>Promise.</em>
         </h1>
+
         <p>
           Designed for those who write their own story. Discover notebooks
           made for learning, creating, and bringing your ideas to life.
         </p>
+
         <div className="hero-actions">
           <a className="button button-dark" href="#products">
             Shop Now <span>↗</span>
           </a>
           <span className="hero-note">Made for your everyday.</span>
         </div>
+
         <div className="hero-stats">
-          <div><strong>Everyday</strong><span>Essentials</span></div>
-          <div><strong>Simple</strong><span>Good design</span></div>
-          <div><strong>Made for</strong><span>Your ideas</span></div>
+          <div>
+            <strong>Everyday</strong>
+            <span>Essentials</span>
+          </div>
+          <div>
+            <strong>Simple</strong>
+            <span>Good design</span>
+          </div>
+          <div>
+            <strong>Made for</strong>
+            <span>Your ideas</span>
+          </div>
         </div>
       </div>
+
       <div className="hero-visual">
-        <img
-          className="hero-image"
-          src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=90"
-          alt="A thoughtfully arranged writing desk"
-        />
+        
+<img
+  src="/images/nrpkart_poster_1200x901.png"
+  alt="nRp Kart stationery collection"
+/>
+
         <div className="hero-image-shade" />
+
         <div className="hero-image-label">
           <span>THE EVERYDAY EDIT</span>
           <strong>A little more inspired.</strong>
         </div>
+
         <div className="floating-note">
           <span className="note-star">✳</span>
           <span>
@@ -90,11 +109,13 @@ function Hero() {
             <small>Your next idea awaits.</small>
           </span>
         </div>
+
         <div className="image-index">01 / 03</div>
       </div>
     </section>
   );
 }
+
 
 function CategorySection({ activeCategory, setActiveCategory }) {
   return (
@@ -447,6 +468,10 @@ function App() {
         />
       </main>
       <Footer />
+       <Chatbot
+        products={products}
+        categories={categories}
+      />
     </>
   );
 }
